@@ -66,7 +66,12 @@
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
-        #noBtn { background-color: #adb5bd; color: white; }
+        #noBtn { 
+            background-color: #adb5bd; 
+            color: white; 
+            position: absolute; 
+            white-space: nowrap;
+        }
 
         #branding {
             position: fixed;
@@ -113,7 +118,9 @@
 
     <div id="content-wrapper">
         <div id="main-setup">
-   
+            <div class="gif_container">
+                <img id="initial-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Zic3R4Ynk5Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmFjdGlvbj1jbGljayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L4lvB7fXU5F5M119pA/giphy.gif" alt="Asking GIF">
+            </div>
             <h1 id="question-text">Will you be my forever? 💍</h1>
             <div class="buttons" id="button-group">
                 <button id="yesBtn" onclick="handleYes()">Yes</button>
@@ -132,10 +139,31 @@
     <div id="branding">Proposal by Pradeep</div>
 
     <script>
+        // Array of funny prompts for the No button
+        const prompts = [
+            "Are you sure?",
+            "Think again!",
+            "Really?",
+            "Last chance!",
+            "Surely not?",
+            "You're breaking my heart ;(",
+            "Pleaassse?",
+            "Change your mind?",
+            "Wait, what?",
+            "Nice try!"
+        ];
+
         function moveButton() {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
             const noBtn = document.getElementById('noBtn');
+            
+            // Pick a random prompt from the list
+            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+            noBtn.innerHTML = randomPrompt;
+
+            // Random movement
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
