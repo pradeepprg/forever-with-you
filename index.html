@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Favorite Person</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            background-color: #ffe6e6;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100dvh; 
+        }
+
+        /* Main Wrapper */
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+            transition: all 0.5s ease;
+        }
+
+        .gif_container img {
+            max-width: 220px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            z-index: 10;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+        }
+
+        /* Footer Style */
+        #footer {
+            position: fixed;
+            bottom: 20px;
+            font-size: 0.9rem;
+            color: #d63384;
+            font-weight: bold;
+            opacity: 0.7;
+        }
+
+        /* Success State styling */
+        .success-text {
+            color: #d63384;
+            font-size: 2rem;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content-wrapper">
+        <div class="gif_container">
+            <!-- Cute initial gif -->
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Zic3R4Ynk5Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmFjdGlvbj1jbGljayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L4lvB7fXU5F5M119pA/giphy.gif" alt="Cute bear">
+        </div>
+
+        <h1 id="main-text">Will you be my forever? 💍</h1>
+
+        <div class="buttons" id="button-group">
+            <button id="yesBtn" onclick="handleYes()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <!-- The signature you requested -->
+    <div id="footer">Proposal by Pradeep</div>
+
+    <script>
+        function moveButton() {
+            const padding = 100;
+            const x = Math.random() * (window.innerWidth - padding * 2) + padding;
+            const y = Math.random() * (window.innerHeight - padding * 2) + padding;
+            
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function handleYes() {
+            // 1. Change the Text
+            document.getElementById('main-text').innerHTML = "I know you are going to accept it! ❤️";
+            document.getElementById('main-text').className = "success-text";
+
+            // 2. Hide the buttons
+            document.getElementById('button-group').style.display = "none";
+
+            // 3. Change the GIF to a celebratory one
+            document.getElementById('main-gif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ0Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmFjdGlvbj1jbGljayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif";
+            
+            // 4. Ensure the signature is prominent
+            document.getElementById('footer').style.opacity = "1";
+            document.getElementById('footer').style.fontSize = "1.2rem";
+        }
+    </script>
+</body>
+</html>
