@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Favorite Person</title>
+    <title>Proposal by Pradeep</title>
     <style>
         html, body {
             margin: 0;
@@ -23,28 +23,27 @@
             height: 100dvh; 
         }
 
-        /* Main Wrapper */
         #content-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             max-width: 90%;
-            transition: all 0.5s ease;
+            z-index: 2;
         }
 
         .gif_container img {
-            max-width: 220px;
+            max-width: 250px;
             width: 100%;
             height: auto;
             border-radius: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         h1 {
             color: #d63384;
             font-size: 1.8rem;
             margin: 10px 0;
+            text-align: center;
         }
 
         .buttons {
@@ -57,71 +56,85 @@
         }
 
         button {
-            padding: 12px 25px;
-            font-size: 1.1rem;
+            padding: 12px 28px;
+            font-size: 1.2rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: bold;
         }
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            z-index: 10;
-        }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #adb5bd; color: white; }
 
-        #noBtn {
-            background-color: #adb5bd;
-            color: white;
-        }
-
-        /* Footer Style */
-        #footer {
+        #branding {
             position: fixed;
             bottom: 20px;
             font-size: 0.9rem;
             color: #d63384;
             font-weight: bold;
-            opacity: 0.7;
+            text-transform: uppercase;
         }
 
-        /* Success State styling */
+        #success-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.8s ease-in;
+        }
+
         .success-text {
             color: #d63384;
             font-size: 2rem;
-            animation: heartBeat 1.5s infinite;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
         }
 
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .heart {
+            position: fixed;
+            top: -10vh;
+            animation: fall 3s linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
         }
     </style>
 </head>
 <body>
 
     <div id="content-wrapper">
-        
+        <div id="main-setup">
+   
+            <h1 id="question-text">Will you be my forever? 💍</h1>
+            <div class="buttons" id="button-group">
+                <button id="yesBtn" onclick="handleYes()">Yes</button>
+                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            </div>
+        </div>
 
-        <h1 id="main-text">Will you be my forever? 💍</h1>
-
-        <div class="buttons" id="button-group">
-            <button id="yesBtn" onclick="handleYes()">Yes</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        <div id="success-screen">
+            <div class="gif_container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ0Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmFjdGlvbj1jbGljayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Happy GIF">
+            </div>
+            <div class="success-text">I know you are going to accept it! ❤️</div>
         </div>
     </div>
 
-    <!-- The signature you requested -->
-    <div id="footer">Proposal by Pradeep</div>
+    <div id="branding">Proposal by Pradeep</div>
 
     <script>
         function moveButton() {
-            const padding = 100;
-            const x = Math.random() * (window.innerWidth - padding * 2) + padding;
-            const y = Math.random() * (window.innerHeight - padding * 2) + padding;
-            
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
             const noBtn = document.getElementById('noBtn');
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
@@ -129,19 +142,21 @@
         }
 
         function handleYes() {
-            // 1. Change the Text
-            document.getElementById('main-text').innerHTML = "I know you are going to accept it! ❤️";
-            document.getElementById('main-text').className = "success-text";
+            document.getElementById('main-setup').style.display = "none";
+            document.getElementById('success-screen').style.display = "flex";
+            setInterval(createHeart, 200);
+            document.title = "She Said Yes! ❤️";
+        }
 
-            // 2. Hide the buttons
-            document.getElementById('button-group').style.display = "none";
-
-            // 3. Change the GIF to a celebratory one
-            document.getElementById('main-gif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ0Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmFjdGlvbj1jbGljayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif";
-            
-            // 4. Ensure the signature is prominent
-            document.getElementById('footer').style.opacity = "1";
-            document.getElementById('footer').style.fontSize = "1.2rem";
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 2 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 3000);
         }
     </script>
 </body>
