@@ -13,6 +13,7 @@
             overflow: hidden; 
             background-color: #ffe6e6;
             font-family: 'Arial', sans-serif;
+            touch-action: manipulation;
         }
 
         body {
@@ -27,7 +28,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 90%;
+            width: 90%;
             z-index: 2;
         }
 
@@ -46,13 +47,15 @@
             text-align: center;
         }
 
-        .buttons {
+        /* Fixed the button container to prevent overlapping */
+        .buttons-container {
             margin-top: 30px;
-            position: relative;
-            width: 100%;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 20px; /* This creates the gap between Yes and No */
+            width: 100%;
+            min-height: 60px;
         }
 
         button {
@@ -61,16 +64,24 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: transform 0.2s;
             font-weight: bold;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; }
+        #yesBtn { 
+            background-color: #ff4d6d; 
+            color: white; 
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
         #noBtn { 
             background-color: #adb5bd; 
             color: white; 
-            position: absolute; 
             white-space: nowrap;
+            /* Starts relative so it stays next to Yes, goes fixed via JS */
+            position: relative; 
+            z-index: 100;
         }
 
         #branding {
@@ -107,6 +118,7 @@
             top: -10vh;
             animation: fall 3s linear forwards;
             z-index: 1;
+            pointer-events: none;
         }
 
         @keyframes fall {
@@ -119,9 +131,9 @@
     <div id="content-wrapper">
         <div id="main-setup">
             <h1 id="question-text">Will you be my forever? 💍</h1>
-            <div class="buttons" id="button-group">
+            <div class="buttons-container">
                 <button id="yesBtn" onclick="handleYes()">Yes</button>
-                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+                <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="moveButton()">No</button>
             </div>
         </div>
 
@@ -136,7 +148,6 @@
     <div id="branding">Proposal by Pradeep</div>
 
     <script>
-        // Array of funny prompts for the No button
         const prompts = [
             "Are you sure?",
             "Think again!",
@@ -153,15 +164,17 @@
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Pick a random prompt from the list
+            // On first interaction, switch to fixed positioning
+            noBtn.style.position = 'fixed';
+
+            // Change text
             const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
             noBtn.innerHTML = randomPrompt;
 
-            // Random movement
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 100);
+            // Calculate random position within viewport
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
-            noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
